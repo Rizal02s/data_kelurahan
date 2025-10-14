@@ -53,7 +53,9 @@
     <ul>
       {% for warga in object_list %}
       <li>
-        <span class="nama">{{ warga.nama }}</span>
+        <span class="nama">
+          <a href="{% url 'warga-detail' warga.pk %}"> {{ warga.nama }} </a>
+        </span>
         <span class="nik">NIK: {{ warga.nik }}</span>
       </li>
       {% empty %}
