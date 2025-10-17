@@ -10,3 +10,19 @@ class Warga(models.Model):
     
     def __str__(self):
         return self.nama
+
+class Pengaduan(models.Model):
+    STATUS_CHOICES = [
+        ('BARU', 'Baru'),
+        ('PROSES', 'Dalam Proses'),
+        ('SELESAI', 'Selesai'),
+    ]
+    aduan = models.CharField(max_length=200, verbose_name="Judul Pengaduan")
+    isi = models.TextField(verbose_name="Isi Pengaduan")
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='BARU', verbose_name="Status Pengaduan")
+    tanggal_aduan = models.DateTimeField(auto_now_add=True)
+    
+    pelapor = models.ForeignKey(Warga, on_delete=models.CASCADE, related_name='pengaduan', verbose_name="Pelapor")
+    
+    def __str__(self):
+        return self.aduan

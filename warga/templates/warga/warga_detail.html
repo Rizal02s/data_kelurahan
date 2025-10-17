@@ -12,12 +12,12 @@
       body {
         font-family: "Poppins", sans-serif;
         margin: 40px;
-        background-color: #e3f2fd;
+        background-color: #d3d6f0;
         color: #333;
       }
 
       .container {
-        background: #fff;
+        background: #f3ffce;
         border-radius: 10px;
         padding: 30px;
         max-width: 600px;
@@ -25,7 +25,7 @@
       }
 
       h1 {
-        color: #0059ff;
+        color: #000000;
         margin-bottom: 20px;
       }
 
@@ -42,8 +42,9 @@
         display: inline-block;
         margin-top: 20px;
         text-decoration: none;
-        color: #0059ff;
+        color: #f60000;
         font-weight: 600;
+        font-family: 'Poppins', sans-serif;
       }
 
       a:hover {
@@ -61,7 +62,19 @@
       <div class="field"><span class="label">Tanggal Lahir:</span> {{ object.no_telepon }}</div>
       <div class="field"><span class="label">Pekerjaan:</span> {{ object.tanggal_registrasi }}</div>
 
-      <a href="{% url 'warga-list' %}">← Kembali ke Daftar Warga</a>
+      <h2>Daftar Pengaduan oleh {{ object.nama_lengkap }} </h2>
+      <ul>
+        {% for aduan in object.pengaduan.all %}
+          <li>
+            <strong>{{aduan.aduan}}</strong> (Status: {{aduan.get_status_display}})<br/>
+            <p>{{aduan.isi}}</p>
+          </li>
+          {%empty%}
+          <li>Warga ini belum pernah melakukan pengaduan.</li>
+        {% endfor %}
+      </ul>
+
+      <a href="{% url 'warga-list' %}">← Kembali</a>
     </div>
   </body>
 </html>
