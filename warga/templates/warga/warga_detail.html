@@ -44,11 +44,28 @@
         text-decoration: none;
         color: #f60000;
         font-weight: 600;
-        font-family: 'Poppins', sans-serif;
       }
 
       a:hover {
         text-decoration: underline;
+      }
+
+      ul {
+        padding-left: 20px;
+      }
+
+      li {
+        margin-bottom: 10px;
+      }
+
+      .aduan-title {
+        font-weight: 600;
+        color: #000;
+      }
+
+      .status {
+        font-style: italic;
+        color: #444;
       }
     </style>
   </head>
@@ -56,25 +73,32 @@
     <div class="container">
       <h1>Detail Warga</h1>
 
-      <div class="field"><span class="label">Nama:</span> {{ object.nama }}</div>
+      <div class="field"><span class="label">Nama:</span> {{ object.nama_lengkap }}</div>
       <div class="field"><span class="label">NIK:</span> {{ object.nik }}</div>
       <div class="field"><span class="label">Alamat:</span> {{ object.alamat }}</div>
-      <div class="field"><span class="label">Tanggal Lahir:</span> {{ object.no_telepon }}</div>
-      <div class="field"><span class="label">Pekerjaan:</span> {{ object.tanggal_registrasi }}</div>
+      <div class="field"><span class="label">No. Telepon:</span> {{ object.no_telepon }}</div>
+      <div class="field"><span class="label">Tanggal Registrasi:</span> {{ object.tanggal_registrasi }}</div>
 
-      <h2>Daftar Pengaduan oleh {{ object.nama_lengkap }} </h2>
+      <hr />
+
+      <h2>Daftar Pengaduan oleh {{ object.nama_lengkap }}</h2>
+
       <ul>
         {% for aduan in object.pengaduan.all %}
           <li>
-            <strong>{{aduan.aduan}}</strong> (Status: {{aduan.get_status_display}})<br/>
-            <p>{{aduan.isi}}</p>
+            <span class="aduan-title">{{ aduan.judul }}</span><br />
+            {{ aduan.deskripsi }}<br />
+            <span class="status">(Status: {{ aduan.get_status_display }})</span><br />
+            <small>Dilaporkan pada: {{ aduan.tanggal_lapor }}</small>
           </li>
-          {%empty%}
+        {% empty %}
           <li>Warga ini belum pernah melakukan pengaduan.</li>
         {% endfor %}
       </ul>
 
-      <a href="{% url 'warga-list' %}">← Kembali</a>
+      <a href="{% url 'warga-list' %}">← Kembali ke Daftar Warga</a>
+      <br />
+      <a href="{% url 'pengaduan-list' %}">Lihat Semua Pengaduan</a>
     </div>
   </body>
 </html>
