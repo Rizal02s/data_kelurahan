@@ -1,19 +1,58 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Daftar Pengaduan</title>
-</head>
-<body>
-  <h1>Daftar Semua Pengaduan</h1>
-  <ul>
+{% extends 'base.html' %}
+{% block title %}Daftar Pengaduan{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">📋 Daftar Semua Pengaduan</h1>
+
+<!-- 🔍 Form Pencarian -->
+<form method="get" class="mb-4 row g-2">
+  <div class="col-md-4">
+    <input type="text" name="q" value="{{ request.GET.q }}" class="form-control" placeholder="Cari judul pengaduan..." />
+  </div>
+  <div class="col-md-3">
+    <select name="status" class="form-select">
+      <option value="">-- Semua Status --</option>
+      <option value="BARU" {% if request.GET.status == 'BARU' %}selected{% endif %}>Baru</option>
+      <option value="PROSES" {% if request.GET.status == 'PROSES' %}selected{% endif %}>Dalam Proses</option>
+      <option value="SELESAI" {% if request.GET.status == 'SELESAI' %}selected{% endif %}>Selesai</option>
+    </select>
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-success w-100">Filter</button>
+  </div>
+  <div class="col-md-3">
+    <a href="{% url 'pengaduan-tambah' %}" class="btn btn-primary w-100">+ Tambah Pengaduan</a>
+  </div>
+</form>
+
+<!-- 🧾 Tabel Daftar Pengaduan -->
+<table class="table table-striped table-bordered align-middle">
+  <thead class="table-success">
+    <tr>
+      <th>Judul</th>
+      <th>Pelapor</th>
+      <th>Status</th>
+      <th>Tanggal</th>
+      <th>Aksi</th>
+    </tr>
+  </thead>
+  <tbody>
     {% for aduan in object_list %}
-      <li>
-        <strong>{{ aduan.judul }}</strong> - {{ aduan.pelapor.nama_lengkap }}
-        ({{ aduan.get_status_display }})
-      </li>
+      <tr>
+        <td>{{ aduan.aduan }}</td>
+        <td>{{ aduan.pelapor.nama }}</td>
+        <td>{{ aduan.get_status_display }}</td>
+        <td>{{ aduan.tanggal_aduan|date:"d M Y H:i" }}</td>
+        <td>
+          <a href="{% url 'pengaduan-edit' aduan.pk %}" class="btn btn-sm btn-warning">Edit</a>
+          <a href="{% url 'pengaduan-hapus' aduan.pk %}" class="btn btn-sm btn-danger">Hapus</a>
+        </td>
+      </tr>
     {% empty %}
-      <li>Belum ada pengaduan.</li>
+      <tr>
+        <td colspan="5" class="text-center text-muted">Belum ada pengaduan.</td>
+      </tr>
     {% endfor %}
-  </ul>
-</body>
-</html>
+  </tbody>
+</table>
+{% endblock %}

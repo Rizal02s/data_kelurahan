@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hapus Data Warga</title>
+  </head>
+  <body>
+    <h1>Yakin ingin menghapus {{ object.nama }}?</h1>
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit">Ya, Hapus</button>
+      <a href="{% url 'warga-list' %}">Batal</a>
+    </form>
+  </body>
+</html>

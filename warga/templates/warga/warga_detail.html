@@ -73,7 +73,7 @@
     <div class="container">
       <h1>Detail Warga</h1>
 
-      <div class="field"><span class="label">Nama:</span> {{ object.nama_lengkap }}</div>
+      <div class="field"><span class="label">Nama:</span> {{ object.nama }}</div>
       <div class="field"><span class="label">NIK:</span> {{ object.nik }}</div>
       <div class="field"><span class="label">Alamat:</span> {{ object.alamat }}</div>
       <div class="field"><span class="label">No. Telepon:</span> {{ object.no_telepon }}</div>
@@ -81,15 +81,15 @@
 
       <hr />
 
-      <h2>Daftar Pengaduan oleh {{ object.nama_lengkap }}</h2>
+      <h2>Daftar Pengaduan oleh {{ object.nama }}</h2>
 
       <ul>
         {% for aduan in object.pengaduan.all %}
           <li>
-            <span class="aduan-title">{{ aduan.judul }}</span><br />
-            {{ aduan.deskripsi }}<br />
+            <span class="aduan-title">{{ aduan.aduan }}</span><br />
+            {{ aduan.isi }}<br />
             <span class="status">(Status: {{ aduan.get_status_display }})</span><br />
-            <small>Dilaporkan pada: {{ aduan.tanggal_lapor }}</small>
+            <small>Dilaporkan pada: {{ aduan.tanggal_aduan }}</small>
           </li>
         {% empty %}
           <li>Warga ini belum pernah melakukan pengaduan.</li>
